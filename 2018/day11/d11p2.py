@@ -1,7 +1,6 @@
 import numpy
-import math
 
-sn = 18
+sn = 7989
 def powerlevel(x,y):
     id = x + 10
     pl = (id * y + sn) * id
@@ -24,10 +23,8 @@ def getMaxi():
                 pl += plList[tuple(a+(s,s)+(x,y))]
                 if pl > maxi:
                     maxi = pl
-                    result = x,y,s,maxi
-                    if maxi == 36: # c'est le max, on sort
-                        return result
+                    result = x,y,s+1
     return result
 
-x,y,s,maxi = getMaxi()
-print('{},{},{},{}'.format(x,y,s,maxi))
+x,y,s = getMaxi()
+print('{},{},{}'.format(x,y,s))
