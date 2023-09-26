@@ -1,26 +1,40 @@
+import world
 
-def isOpenSpace(t):
-    x,y = t
-    n = x*x + 3*x + 2*x*y + y + y*y
-    b = format(n+favNb, 'b')
-    return b.count('1') % 2 == 0
+carList = list()
+t = world.tracks()
+for y,line in enumerate(t.space):
+    for x,tile in enumerate(line):
+        if tile in ('>','v','^','<'):
+            carList.append(world.car(x,y,tile))
 
-def getAround(pos):
-    p1 = (pos[0], pos[1]+1)
-    p2 = (pos[0], pos[1]-1)
-    p3 = (pos[0]+1, pos[1])
-    p4 = (pos[0]-1, pos[1])
-    return [x for x in [p1, p2, p3, p4] if isOpenSpace(x) and x[0]>=0 and x[1]>=0]
+def sort_the_cars():
+    vals = []
+    carList2 = []
+    global carList
+    for c in carList:
+        vals.append(c.pos[1]*1000 + c.pos[0])
+    vals.sort()
+    for v in vals:
+        for c in carList:
+            if c.pos[1]*1000 + c.pos[0] == v:
+                carList2.append(c)
+                break
+    carList = carList2
 
-i = 1
-maze = {(1,1)}
-favNb = int(open('./2016/day13/input.txt', 'r').read())
-while(True):
-    around = set()
-    for pos in maze:
-        around.update(getAround(pos))
-    maze.update(around)
-    if i == 50:
-        print(len(maze))
+finish = False
+while not finish:
+    sort_the_cars()
+    for i,car in enumerate(carList):
+        if not car.crashed:
+            car.move(t)
+            if tuple(car.pos) in [tuple(c.pos) for c in carList if c != car]:
+                crashPos = tuple(car.pos)
+                for c in carList:
+                    if tuple(c.pos) == crashPos:
+                        c.crash()
+
+    remain = [c.pos for c in carList if not c.crashed]
+    if len(remain) == 1:
+        print('{},{}'.format(remain[0][0], remain[0][1]))
+        finish = True
         break
-    i += 1
