@@ -1,11 +1,11 @@
-import world
+import world as w
 
 carList = list()
-t = world.tracks()
+t = w.tracks()
 for y,line in enumerate(t.space):
     for x,tile in enumerate(line):
         if tile in ('>','v','^','<'):
-            carList.append(world.car(x,y,tile))
+            carList.append(w.car(x,y,tile))
 
 crash = False
 while not crash:
