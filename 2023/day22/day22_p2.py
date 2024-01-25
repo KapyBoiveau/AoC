@@ -1,0 +1,1 @@
+open('./2023/day22/input.txt', 'r').readlines()
