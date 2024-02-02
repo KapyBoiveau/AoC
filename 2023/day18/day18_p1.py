@@ -1,15 +1,9 @@
 import numpy as np
 
-def turn():
-    t = oldDir + dir # the turn
-    if t in ('UR', 'LD'):
-        return 'F'
-    elif t in ('UL', 'RD'):
-        return '7'
-    elif t in ('DR', 'LU'):
-        return 'L'
-    else:
-        return 'J'
+turn = {'UR':'F', 'LD':'F', 
+        'UL':'7', 'RD':'7', 
+        'DR':'L', 'LU':'L', 
+        'DL':'J', 'RU':'J'}
 
 oldDir = 'U'
 trench = dict()
@@ -19,7 +13,7 @@ dirDic = {'R':np.array((0,1)), 'L':np.array((0,-1)), 'D':np.array((1,0)), 'U':np
 
 for line in input:
     dir, dist, osef = line.split()
-    trench[tuple(pos)] = turn()
+    trench[tuple(pos)] = turn[oldDir+dir]
     for i in range(int(dist)-1):
         trench[tuple(pos + dirDic[dir] * (i+1))] = '|' if dir in 'UD' else '-'
     pos += dirDic[dir] * int(dist)

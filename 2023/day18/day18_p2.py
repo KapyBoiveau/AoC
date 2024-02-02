@@ -5,27 +5,10 @@ pos = np.array((0,0))
 posSet = set()
 oldDir = 'U'
 
-turn = {'UR':'F', 'LD':'F', 
-        'UL':'7', 'RD':'7', 
-        'DR':'L', 'LU':'L', 
-        'DL':'J', 'RU':'J'}
-
 dirDic = {'R':np.array((0,1)), 
           'D':np.array((1,0)), 
           'L':np.array((0,-1)), 
           'U':np.array((-1,0))}
-
-for line in input:
-    a, b, instr = line.split()
-    dir = 'RDLU'[int(instr[-2])]
-    dist = int('0x'+instr[2:-2], 16)
-    posSet.add(tuple(pos))
-    pos += dirDic[dir] * int(dist)
-    oldDir = dir
-
-posList = np.array(sorted(posSet))
-xmin, xmax = np.amin(posList[:,1]), np.amax(posList[:,1])
-ymin, ymax = posList[0][0], posList[-1][0]
 
 def removeDoublons():
     xSet, result = set(), list()
@@ -38,8 +21,17 @@ def removeDoublons():
             result.append(e)
     return result
 
+for line in input:
+    a, b, instr = line.split()
+    dir = 'RDLU'[int(instr[-2])]
+    dist = int('0x'+instr[2:-2], 16)
+    posSet.add(tuple(pos))
+    pos += dirDic[dir] * int(dist)
+    oldDir = dir
+
+nb = 0
 edges = list()
-nb = np.float64()
+posList = np.array(sorted(posSet))
 prevY, prevLarg = posList[0][1], 0
 for p in posList:
     if len(edges) % 2 == 0:
