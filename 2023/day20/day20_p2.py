@@ -70,14 +70,15 @@ for m in mDict:
 
 low, high = 0, 0
 pulses = q.Queue()
-for i in range(10000):
+for i in range(100000):
     mDict['button'].receive()
     while not pulses.empty():
         m, p, n = pulses.get()
         m.receive(p, n)
 
-    for c_mod in ('qq', 'bx', 'bc', 'gj'): # for c_mod in ('jc', 'vm', 'qq', 'fj'):
+    for c_mod in ('jc', 'vm', 'qq', 'fj'): # c_mod in ('qq', 'bx', 'bc', 'gj'):
         if all(mDict[c_mod].lastInputs.values()):
             print(c_mod, i+1)
 
-print(low * high)
+print('fini')
+#print(low, high, low * high)
