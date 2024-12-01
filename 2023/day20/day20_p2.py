@@ -79,6 +79,6 @@ for i in range(100):
     x = ''
     for c_mod in ('qq', 'bx', 'bc', 'gj'): # for c_mod in ('jc', 'vm', 'qq', 'fj'):
         x += ''.join(['1' if val else '0' for val in mDict[c_mod].lastInputs.values()])
-    print(i, x)
+    print(x, i)
 
 #print(low * high)
