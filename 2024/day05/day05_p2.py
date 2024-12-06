@@ -17,14 +17,15 @@ for line in lines:
         firstPart = False
 
     elif firstPart: # same as part 1
-        pages = line.split('|')
+        pages = list(map(int, line.split('|')))
         if pages[1] not in rules:
             rules[pages[1]] = []
         rules[pages[1]].append(pages[0])
 
     else:
-        update = line.split(',')
+        update = list(map(int, line.split(',')))
         ok = False
+        modif = False
         while not ok:
 
             ok = True
@@ -34,10 +35,11 @@ for line in lines:
                 if toSwap: # swap until all good
                     update[update.index(toSwap[1])] = toSwap[0]
                     update[i] = toSwap[1]
+                    modif = True
                     ok = False
                     break
 
-        if ','.join(update) != line: # if we modified the update
-            total += int(update[int(len(update)/2)])
+        if modif:
+            total += update[int(len(update)/2)]
 
 print(total)
