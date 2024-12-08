@@ -1,17 +1,16 @@
+import numpy as np
 
-lines = open('./2024/day04/input.txt', 'r').read().split('\n')
+file = open('./2024/day04/input.txt', 'r').read().split('\n')
+grid = np.array([list(x) for x in file])
 
-def isCross(x, y):
-    if 0 < x < len(lines)-1 and 0 < y < len(lines[0])-1:
-        nw_se = lines[x-1][y-1] + lines[x][y] + lines[x+1][y+1]
-        ne_sw = lines[x-1][y+1] + lines[x][y] + lines[x+1][y-1]
+def isCross(pos):
+    x, y = pos
+    if 0 < x < grid.shape[0]-1 and 0 < y < grid.shape[1]-1:
+        nw_se = grid[x-1,y-1] + grid[x,y] + grid[x+1,y+1]
+        ne_sw = grid[x-1,y+1] + grid[x,y] + grid[x+1,y-1]
         if nw_se in ['MAS', 'SAM'] and ne_sw in ['MAS', 'SAM']:
             return True
     return False
 
-nb = 0
-for x in range(len(lines)):
-    for y in range(len(lines[x])):
-        nb += lines[x][y] == 'A' and isCross(x, y)
-
-print(nb)
+As = np.argwhere(grid == 'A')
+print(sum(isCross(a) for a in As))
