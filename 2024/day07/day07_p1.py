@@ -13,7 +13,7 @@ for equ in open('./2024/day07/input.txt', 'r').read().split('\n'):
             else:
                 calc = calc + vals[i]
 
-                
+
         if calc == goal:
             tot += goal
             break
