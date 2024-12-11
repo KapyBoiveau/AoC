@@ -5,6 +5,7 @@ def split_number(n, nbDigits):
     half = 10 ** (nbDigits // 2)  # Puissance de 10 pour séparer
     return n // half, n % half # left, right
 
+
 def blink(key):
     stone, n = key
     global dico
