@@ -7,7 +7,7 @@ class Program
     static void Main(string[] args)
     {
         // Appel à la méthode spécifique de Day01
-        Day05.Solution();
+        Day06.Solution();
         
     }
 }

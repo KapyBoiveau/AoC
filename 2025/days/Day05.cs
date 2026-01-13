@@ -21,23 +21,31 @@ namespace _2025.Days
 
             ManageIntersections(ref ranges);
 
-            int freshIDs = ids.Count(id => ranges.Any(r => id >= r.start && id <= r.end));
+            // int freshIDs = ids.Count(id => ranges.Any(r => id >= r.start && id <= r.end));
             long allFreshIDs = ranges.Sum(r => r.end - r.start + 1);
             
-            foreach(var (start, end) in ranges)
-            {
-                Console.WriteLine($"{end} - {start} = {end-start+1}");
-            }
             Console.WriteLine($"Total : {allFreshIDs}");
         }
 
         private static void ManageIntersections(ref (long start, long end)[] ranges)
         {
+            var result = new List<(long start, long end)>{ranges[0]};
+            
             for (int i = 1; i < ranges.Length; i++)
             {
-                if (ranges[i].start <= ranges[i-1].end)
-                    ranges[i].start = ranges[i-1].end + 1;
+                var (_, lastEnd) = result[^1];
+                var current = ranges[i];
+
+                if (current.end <= lastEnd)
+                    continue;
+
+                if (current.start <= lastEnd)
+                    current.start = lastEnd + 1;
+
+                result.Add(current);
             }
+
+            ranges = [.. result]; // équivalent result.ToArray()
         }
     }
 }
